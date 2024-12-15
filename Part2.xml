@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+int x1;
+int x2;
+
+int  CPU1_C;
+chan CPU1_use, CPU1_done;
+int  CPU2_C;
+chan CPU2_use, CPU2_done;
+
+int JOBA_C1 = 3;
+int JOBA_C2 = 4;
+int JOBB_C1 = 3;
+int JOBB_C2 = 2;
+int JOBC_C1 = 6;
+int JOBC_C2 = 5;
+int JOBD_C1 = 3;
+int JOBD_C2 = 3;
+int JOBE_C1 = 2;
+int JOBE_C2 = 1;
+
+int JOB_A_DEP1 = 0;
+int JOB_A_DEP2 = 0;
+int JOB_B_DEP1 = 0;
+int JOB_B_DEP2 = 0;
+int JOB_C_DEP1 = 1;
+int JOB_C_DEP2 = 2;
+int JOB_D_DEP1 = 2;
+int JOB_D_DEP2 = 0;
+int JOB_E_DEP1 = 4;
+int JOB_E_DEP2 = 0;
+
+// integer counter "done_counter" and a global clock "y" to
+int done_counter;
+clock y;
+
+int finished[5] = {0, 0, 0, 0, 0};</declaration>
+	<template>
+		<name>Job</name>
+		<parameter>int &amp;C1, int &amp;C2, int &amp;dep1, int &amp;dep2, int jobindex, int &amp;x1, int &amp;x2</parameter>
+		<location id="id0" x="-518" y="-425">
+			<name x="-569" y="-433">wait</name>
+		</location>
+		<location id="id1" x="-680" y="-348">
+		</location>
+		<location id="id2" x="-357" y="-340">
+		</location>
+		<location id="id3" x="-680" y="-238">
+			<committed/>
+		</location>
+		<location id="id4" x="-357" y="-238">
+			<committed/>
+		</location>
+		<location id="id5" x="-518" y="-178">
+			<urgent/>
+		</location>
+		<location id="id6" x="-518" y="-629">
+			<name x="-528" y="-663">ready</name>
+		</location>
+		<location id="id7" x="-518" y="-323">
+			<urgent/>
+		</location>
+		<init ref="id0"/>
+		<transition id="id8">
+			<source ref="id7"/>
+			<target ref="id0"/>
+			<label kind="assignment" x="-518" y="-374">done_counter++</label>
+		</transition>
+		<transition id="id9">
+			<source ref="id3"/>
+			<target ref="id3"/>
+			<label kind="assignment" x="-833" y="-255">x1++</label>
+			<nail x="-799" y="-272"/>
+			<nail x="-799" y="-195"/>
+		</transition>
+		<transition id="id10">
+			<source ref="id4"/>
+			<target ref="id4"/>
+			<label kind="assignment" x="-221" y="-263">x2++</label>
+			<nail x="-229" y="-289"/>
+			<nail x="-229" y="-212"/>
+		</transition>
+		<transition id="id11">
+			<source ref="id0"/>
+			<target ref="id6"/>
+			<label kind="guard" x="-671" y="-510">(dep1 == 0 || (dep1 &gt; 0 &amp;&amp; finished[dep1-1] == 1)) &amp;&amp;
+(dep2 == 0 || (dep2 &gt; 0 &amp;&amp; finished[dep2-1] == 1)) &amp;&amp;
+finished[jobindex] == 0</label>
+		</transition>
+		<transition id="id12">
+			<source ref="id5"/>
+			<target ref="id7"/>
+			<label kind="assignment" x="-595" y="-289">finished[jobindex] := 1</label>
+			<nail x="-518" y="-297"/>
+		</transition>
+		<transition id="id13">
+			<source ref="id3"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-612" y="-229">CPU1_done?</label>
+			<label kind="assignment" x="-663" y="-204">CPU1_C=0</label>
+		</transition>
+		<transition id="id14">
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-501" y="-229">CPU2_done?</label>
+			<label kind="assignment" x="-459" y="-204">CPU2_C=0</label>
+		</transition>
+		<transition id="id15">
+			<source ref="id2"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-348" y="-306">CPU2_use!</label>
+		</transition>
+		<transition id="id16">
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-756" y="-306">CPU1_use!</label>
+		</transition>
+		<transition id="id17">
+			<source ref="id6"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-756" y="-442">CPU1_C==0</label>
+			<label kind="assignment" x="-756" y="-425">CPU1_C=C1</label>
+			<nail x="-680" y="-552"/>
+			<nail x="-680" y="-399"/>
+		</transition>
+		<transition id="id18">
+			<source ref="id6"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-348" y="-442">CPU2_C==0</label>
+			<label kind="assignment" x="-348" y="-425">CPU2_C=C2</label>
+			<nail x="-357" y="-552"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">Cpu</name>
+		<parameter>chan &amp;use, chan &amp;done, int &amp;C, int &amp;x</parameter>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id19" x="-272" y="-212">
+			<name x="-289" y="-246">idle</name>
+		</location>
+		<location id="id20" x="-272" y="-25">
+			<name x="-289" y="-59">inUse</name>
+			<label kind="exponentialrate" x="-289" y="-8">x&lt;=C</label>
+		</location>
+		<init ref="id19"/>
+		<transition id="id21">
+			<source ref="id20"/>
+			<target ref="id19"/>
+			<label kind="guard" x="-416" y="-136">x==C</label>
+			<label kind="synchronisation" x="-416" y="-119">done!</label>
+			<nail x="-374" y="-25"/>
+			<nail x="-374" y="-212"/>
+		</transition>
+		<transition id="id22">
+			<source ref="id19"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-170" y="-136">use?</label>
+			<label kind="assignment" x="-170" y="-119">x:=0</label>
+			<nail x="-178" y="-212"/>
+			<nail x="-178" y="-25"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here
+CPU1 = Cpu(CPU1_use, CPU1_done, CPU1_C, x1);
+CPU2 = Cpu(CPU2_use, CPU2_done, CPU2_C, x2);
+
+JobA = Job(JOBA_C1, JOBA_C2, JOB_A_DEP1, JOB_A_DEP2,0,x1,x2);
+JobB = Job(JOBB_C1, JOBB_C2, JOB_B_DEP1, JOB_B_DEP2,1,x1,x2);
+JobC = Job(JOBC_C1, JOBC_C2, JOB_C_DEP1, JOB_C_DEP2,2,x1,x2);
+JobD = Job(JOBD_C1, JOBD_C2, JOB_D_DEP1, JOB_D_DEP2,3,x1,x2);
+JobE = Job(JOBE_C1, JOBE_C2, JOB_E_DEP1, JOB_E_DEP2,4,x1,x2);
+
+// List one or more processes to be composed into a system.
+// system Process;
+system JobA, JobB, JobC, JobD, JobE, CPU1, CPU2;
+</system>
+	<queries>
+		<query>
+			<formula/>
+			<comment/>
+		</query>
+	</queries>
+</nta>
