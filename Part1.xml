@@ -76,51 +76,33 @@ system P1, P2, P3;
 </system>
 	<queries>
 		<query>
-			<formula>E&lt;&gt; P1.end</formula>
-			<comment/>
-			<result outcome="success" type="quality" timestamp="2024-12-12 14:23:44 +0100">
-			</result>
-		</query>
-		<query>
-			<formula>E&lt;&gt;P2.end</formula>
-			<comment/>
-			<result outcome="success" type="quality" timestamp="2024-12-12 14:16:14 +0100">
-			</result>
-		</query>
-		<query>
-			<formula>E&lt;&gt;P3.end</formula>
-			<comment/>
-			<result outcome="success" type="quality" timestamp="2024-12-12 14:23:42 +0100">
-			</result>
-		</query>
-		<query>
 			<formula>E&lt;&gt; i &gt; 200</formula>
 			<comment/>
-			<result outcome="failure" type="quality" timestamp="2024-12-12 14:19:35 +0100">
+			<result outcome="failure" type="quality" timestamp="2024-12-15 19:03:48 +0100">
 			</result>
 		</query>
 		<query>
 			<formula>A[] i &lt;= 100</formula>
 			<comment/>
-			<result outcome="success" type="quality" timestamp="2024-12-12 14:20:31 +0100">
+			<result outcome="success" type="quality" timestamp="2024-12-15 19:03:51 +0100">
 			</result>
 		</query>
 		<query>
 			<formula>A[] i &lt; 100</formula>
 			<comment/>
-			<result outcome="failure" type="quality" timestamp="2024-12-12 14:20:46 +0100">
+			<result outcome="failure" type="quality" timestamp="2024-12-15 19:03:52 +0100">
 			</result>
 		</query>
 		<query>
-			<formula>E[] i &lt;= 42</formula>
+			<formula>E&lt;&gt; i &lt;= 42</formula>
 			<comment/>
-			<result outcome="success" type="quality" timestamp="2024-12-12 14:23:39 +0100">
+			<result outcome="success" type="quality" timestamp="2024-12-15 19:10:34 +0100">
 			</result>
 		</query>
 		<query>
 			<formula>A[] i &gt;= 0</formula>
 			<comment/>
-			<result outcome="failure" type="quality" timestamp="2024-12-12 14:23:36 +0100">
+			<result outcome="failure" type="quality" timestamp="2024-12-15 19:03:54 +0100">
 			</result>
 		</query>
 	</queries>
