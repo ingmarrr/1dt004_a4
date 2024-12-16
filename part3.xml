@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan producer_finish, buffer_finish, put, get;</declaration>
+	<template>
+		<name x="5" y="5">Producer</name>
+		<parameter>chan &amp;put, chan &amp;producer_finish</parameter>
+		<declaration>// Place local declarations here.
+clock x=0.0;</declaration>
+		<location id="id0" x="-518" y="-42">
+			<name x="-595" y="-76">select</name>
+			<label kind="invariant" x="-578" y="-51">x&lt;=3</label>
+		</location>
+		<location id="id1" x="-365" y="-42">
+			<name x="-399" y="-76">waitput</name>
+		</location>
+		<location id="id2" x="-204" y="-42">
+		</location>
+		<location id="id3" x="-518" y="119">
+			<name x="-535" y="136">done</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id4">
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-357" y="42">producer_finish?</label>
+			<nail x="-365" y="119"/>
+		</transition>
+		<transition id="id5">
+			<source ref="id0"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-671" y="25">producer_finish?</label>
+		</transition>
+		<transition id="id6">
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="assignment" x="-382" y="-170">x:=0</label>
+			<nail x="-204" y="-144"/>
+			<nail x="-518" y="-144"/>
+		</transition>
+		<transition id="id7">
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-306" y="-68">put!</label>
+		</transition>
+		<transition id="id8">
+			<source ref="id0"/>
+			<target ref="id1"/>
+		</transition>
+	</template>
+	<template>
+		<name>Consumer</name>
+		<parameter>chan &amp;get, chan &amp;buffer_finish, chan &amp;producer_finish</parameter>
+		<declaration>clock x = 0.0;
+int csum=0;</declaration>
+		<location id="id9" x="-102" y="-127">
+			<name x="-178" y="-161">select</name>
+			<label kind="invariant" x="-162" y="-136">x&lt;=3</label>
+		</location>
+		<location id="id10" x="212" y="-127">
+			<name x="204" y="-110">getvalue</name>
+		</location>
+		<location id="id11" x="51" y="-127">
+			<name x="17" y="-161">delayed</name>
+		</location>
+		<location id="id12" x="212" y="-221">
+			<name x="202" y="-255">gotvalue</name>
+		</location>
+		<location id="id13" x="51" y="0">
+			<name x="34" y="144">done</name>
+		</location>
+		<location id="id14" x="51" y="127">
+		</location>
+		<init ref="id9"/>
+		<transition id="id15">
+			<source ref="id13"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="59" y="42">buffer_finish!</label>
+		</transition>
+		<transition id="id16">
+			<source ref="id12"/>
+			<target ref="id9"/>
+			<label kind="assignment" x="42" y="-246">x:=0</label>
+			<nail x="-102" y="-221"/>
+		</transition>
+		<transition id="id17">
+			<source ref="id11"/>
+			<target ref="id13"/>
+			<label kind="guard" x="59" y="-85">csum&gt;=100</label>
+			<label kind="synchronisation" x="59" y="-68">producer_finish!</label>
+		</transition>
+		<transition id="id18">
+			<source ref="id10"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="221" y="-187">get!</label>
+			<label kind="assignment" x="221" y="-170">csum := csum+20</label>
+		</transition>
+		<transition id="id19">
+			<source ref="id11"/>
+			<target ref="id10"/>
+			<label kind="guard" x="85" y="-153">csum &lt; 100</label>
+		</transition>
+		<transition id="id20">
+			<source ref="id9"/>
+			<target ref="id11"/>
+		</transition>
+	</template>
+	<template>
+		<name>Buffer</name>
+		<parameter>chan &amp;put, chan &amp;get, chan &amp;buffer_finish</parameter>
+		<declaration>int items=0;</declaration>
+		<location id="id21" x="-2839" y="-187">
+			<name x="-2822" y="-212">select</name>
+		</location>
+		<location id="id22" x="-2983" y="-187">
+		</location>
+		<location id="id23" x="-2626" y="-187">
+		</location>
+		<location id="id24" x="-2720" y="-187">
+		</location>
+		<location id="id25" x="-3085" y="-187">
+		</location>
+		<location id="id26" x="-2839" y="-59">
+			<name x="-2856" y="-42">done</name>
+		</location>
+		<init ref="id21"/>
+		<transition id="id27">
+			<source ref="id23"/>
+			<target ref="id21"/>
+			<nail x="-2592" y="-187"/>
+			<nail x="-2592" y="-229"/>
+			<nail x="-2830" y="-229"/>
+		</transition>
+		<transition id="id28">
+			<source ref="id25"/>
+			<target ref="id21"/>
+			<nail x="-3128" y="-187"/>
+			<nail x="-3128" y="-229"/>
+			<nail x="-2856" y="-229"/>
+		</transition>
+		<transition id="id29">
+			<source ref="id21"/>
+			<target ref="id26"/>
+			<label kind="synchronisation" x="-2830" y="-119">buffer_finish?</label>
+		</transition>
+		<transition id="id30">
+			<source ref="id22"/>
+			<target ref="id25"/>
+			<label kind="assignment" x="-3128" y="-170">items = items+1</label>
+		</transition>
+		<transition id="id31">
+			<source ref="id21"/>
+			<target ref="id22"/>
+			<label kind="guard" x="-2949" y="-170">items&lt;3</label>
+			<label kind="synchronisation" x="-2932" y="-187">put?</label>
+			<nail x="-2932" y="-187"/>
+		</transition>
+		<transition id="id32">
+			<source ref="id24"/>
+			<target ref="id23"/>
+			<label kind="assignment" x="-2728" y="-170">items = items-1</label>
+		</transition>
+		<transition id="id33">
+			<source ref="id21"/>
+			<target ref="id24"/>
+			<label kind="guard" x="-2805" y="-170">items&gt;0</label>
+			<label kind="synchronisation" x="-2796" y="-187">get?</label>
+			<nail x="-2745" y="-187"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+B = Buffer(put, get, buffer_finish);
+C = Consumer(get, buffer_finish, producer_finish);
+P = Producer(put, producer_finish);
+// List one or more processes to be composed into a system.
+system B, C, P;
+</system>
+	<queries>
+		<option key="--diagnostic" value="1"/>
+		<query>
+			<formula>A[] (not deadlock || (B.done and C.done and P.done))</formula>
+			<comment/>
+		</query>
+	</queries>
+</nta>
