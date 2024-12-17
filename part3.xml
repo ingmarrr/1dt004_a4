@@ -24,7 +24,7 @@ clock x=0.0;</declaration>
 		<transition id="id4">
 			<source ref="id1"/>
 			<target ref="id3"/>
-			<label kind="synchronisation" x="-357" y="42">producer_finish?</label>
+			<label kind="synchronisation" x="-357" y="25">producer_finish?</label>
 			<nail x="-365" y="119"/>
 		</transition>
 		<transition id="id5">
@@ -62,15 +62,15 @@ int csum=0;</declaration>
 			<name x="204" y="-110">getvalue</name>
 		</location>
 		<location id="id11" x="51" y="-127">
-			<name x="17" y="-161">delayed</name>
+			<name x="17" y="-161">waitget</name>
 		</location>
 		<location id="id12" x="212" y="-221">
 			<name x="202" y="-255">gotvalue</name>
 		</location>
 		<location id="id13" x="51" y="0">
-			<name x="34" y="144">done</name>
 		</location>
 		<location id="id14" x="51" y="127">
+			<name x="34" y="144">done</name>
 		</location>
 		<init ref="id9"/>
 		<transition id="id15">
@@ -115,9 +115,9 @@ int csum=0;</declaration>
 		</location>
 		<location id="id22" x="-2983" y="-187">
 		</location>
-		<location id="id23" x="-2626" y="-187">
+		<location id="id23" x="-2575" y="-187">
 		</location>
-		<location id="id24" x="-2720" y="-187">
+		<location id="id24" x="-2686" y="-187">
 		</location>
 		<location id="id25" x="-3085" y="-187">
 		</location>
@@ -128,8 +128,8 @@ int csum=0;</declaration>
 		<transition id="id27">
 			<source ref="id23"/>
 			<target ref="id21"/>
-			<nail x="-2592" y="-187"/>
-			<nail x="-2592" y="-229"/>
+			<nail x="-2524" y="-187"/>
+			<nail x="-2524" y="-229"/>
 			<nail x="-2830" y="-229"/>
 		</transition>
 		<transition id="id28">
@@ -147,25 +147,25 @@ int csum=0;</declaration>
 		<transition id="id30">
 			<source ref="id22"/>
 			<target ref="id25"/>
-			<label kind="assignment" x="-3128" y="-170">items = items+1</label>
+			<label kind="assignment" x="-3060" y="-178">items++</label>
 		</transition>
 		<transition id="id31">
 			<source ref="id21"/>
 			<target ref="id22"/>
-			<label kind="guard" x="-2949" y="-170">items&lt;3</label>
-			<label kind="synchronisation" x="-2932" y="-187">put?</label>
+			<label kind="guard" x="-2941" y="-178">items&lt;3</label>
+			<label kind="synchronisation" x="-2924" y="-161">put?</label>
 			<nail x="-2932" y="-187"/>
 		</transition>
 		<transition id="id32">
 			<source ref="id24"/>
 			<target ref="id23"/>
-			<label kind="assignment" x="-2728" y="-170">items = items-1</label>
+			<label kind="assignment" x="-2660" y="-178">items--</label>
 		</transition>
 		<transition id="id33">
 			<source ref="id21"/>
 			<target ref="id24"/>
-			<label kind="guard" x="-2805" y="-170">items&gt;0</label>
-			<label kind="synchronisation" x="-2796" y="-187">get?</label>
+			<label kind="guard" x="-2813" y="-178">items&gt;0</label>
+			<label kind="synchronisation" x="-2796" y="-161">get?</label>
 			<nail x="-2745" y="-187"/>
 		</transition>
 	</template>
