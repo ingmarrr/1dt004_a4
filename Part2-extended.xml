@@ -199,9 +199,9 @@ and JobI.job_finished and CPU1.idle and CPU2.idle))</formula>
 			</result>
 		</query>
 		<query>
-			<formula>E&lt;&gt; done_counter == 9 and y &lt; 10</formula>
+			<formula>E&lt;&gt; done_counter == 9 and y &lt; 14</formula>
 			<comment/>
-			<result outcome="failure" type="quality" timestamp="2024-12-18 16:33:29 +0100">
+			<result outcome="failure" type="quality" timestamp="2024-12-20 13:24:47 +0100">
 			</result>
 		</query>
 		<query>
